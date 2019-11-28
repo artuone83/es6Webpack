@@ -1,14 +1,27 @@
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
   entry: './src/index.js',
   output: {
-    path: `${__dirname}/dist/js`,
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, 'dist/js'),
+    filename: '[name].[hash].js'
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'ES6 Exercises Environment',
+      template: './src/index.html'
+    }),
+    new CleanWebpackPlugin(),
+  ],
   watch: false,
   mode: 'development',
   devtool: 'source-map',
   devServer: {
-    port: 8888
+    contentBase: path.join(__dirname, 'dist' ),
+    compress: true,
+    port: 3333
   },
   module: {
     rules: [
